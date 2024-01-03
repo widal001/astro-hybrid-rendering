@@ -1,51 +1,67 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Card from "../components/Card.astro";
-import Card2 from "@/components/Card2.astro";
+import CardItem from "@/components/CardItem.astro";
+import BadgeList from "@/components/BadgeList.astro";
+import type { CardProps } from "@/types";
+
+const cards = [
+  {
+    href: "https://docs.astro.build/",
+    title: "Documentation",
+    body: "Learn how Astro works and explore the official API docs.",
+    badges: ["docs", "api", "resources"],
+  },
+  {
+    href: "https://astro.build/integrations/",
+    title: "Integrations",
+    body: "Supercharge your project with new frameworks and libraries.",
+    badges: ["integrations", "api", "add-ons"],
+  },
+  {
+    href: "https://astro.build/themes/",
+    title: "Themes",
+    body: "Explore a galaxy of community-built starter themes.",
+    badges: ["themes", "ui", "community"],
+  },
+  {
+    href: "https://astro.build/chat/",
+    title: "Community",
+    body: "Come say hi to our amazing Discord community. ❤️",
+    badges: ["community", "help", "open-source"],
+  },
+] as Array<CardProps>;
+
+const topicArr = cards.map((cards) => cards.badges);
+const topics = [...new Set(topicArr.flat())];
 ---
 
 <Layout title="Welcome to Astro.">
   <main>
     <div class="container max-w-4xl">
-      <div class="container my-8">
+      <section class="container my-8">
         <h1
           class="font-extrabold text-primary tracking-tight leading-none text-center text-5xl xl:text-6xl"
         >
           Welcome to Astro
         </h1>
-      </div>
-      <div class="container">
-        <p class="instructions">
-          To get started, open the directory <code>src/pages</code> in your
-          project.<br />
-          <strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message
-          above.
-        </p>
-      </div>
-      <div class="container my-3">
+      </section>
+      <section class="container mt-6 mb-8">
+        <BadgeList badges={topics} />
+      </section>
+      <section class="container my-3">
         <ul role="list" class="grid md:grid-cols-2 gap-4">
-          <Card2
-            href="https://docs.astro.build/"
-            title="Documentation"
-            body="Learn how Astro works and explore the official API docs."
-          />
-          <Card2
-            href="https://astro.build/integrations/"
-            title="Integrations"
-            body="Supercharge your project with new frameworks and libraries."
-          />
-          <Card2
-            href="https://astro.build/themes/"
-            title="Themes"
-            body="Explore a galaxy of community-built starter themes."
-          />
-          <Card2
-            href="https://astro.build/chat/"
-            title="Community"
-            body="Come say hi to our amazing Discord community. ❤️"
-          />
+          {
+            cards.map((card) => (
+              <CardItem
+                href={card.href}
+                title={card.title}
+                body={card.body}
+                badges={card.badges}
+              />
+            ))
+          }
         </ul>
-      </div>
+      </section>
     </div>
   </main>
 </Layout>
