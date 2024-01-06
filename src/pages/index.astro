@@ -1,7 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import CardItem from "@/components/CardItem.astro";
-import BadgeList from "@/components/BadgeList.astro";
+import CardList from "@/components/CardList";
 import type { CardProps } from "@/types";
 
 const cards = [
@@ -46,21 +45,7 @@ const topics = [...new Set(topicArr.flat())];
         </h1>
       </section>
       <section class="container mt-6 mb-8">
-        <BadgeList badges={topics} />
-      </section>
-      <section class="container my-3">
-        <ul role="list" class="grid md:grid-cols-2 gap-4">
-          {
-            cards.map((card) => (
-              <CardItem
-                href={card.href}
-                title={card.title}
-                body={card.body}
-                badges={card.badges}
-              />
-            ))
-          }
-        </ul>
+        <CardList tags={topics} items={cards} client:idle />
       </section>
     </div>
   </main>
